@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,17 +20,15 @@ public class Home {
 
 
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
 	private int num_home;
 	private int superficie;
 	private int nbr_piece;
 	private String adresse;
 	private String adresseIP;
-	@ManyToOne
- 	@JoinColumn(name="id_person")
+	
 	private Person person ;
-	@OneToMany(mappedBy="home",fetch=FetchType.LAZY)
+
 	private List<Device> Devices= new ArrayList<Device>() ;
 
 	
@@ -47,7 +46,8 @@ public class Home {
 		this.adresseIP = adresseIP;
 	
 	}
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getNum_home() {
 		return num_home;
 	}
@@ -86,8 +86,9 @@ public class Home {
 	public void setAdresseIP(String adresseIP) {
 		this.adresseIP = adresseIP;
 	}
-
-
+	
+	@ManyToOne
+ 	@JoinColumn(name="id_person")
 	public Person getPerson() {
 		return person;
 	}
@@ -96,8 +97,8 @@ public class Home {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-
-
+	
+	@OneToMany(mappedBy="home",cascade = CascadeType.PERSIST,fetch=FetchType.LAZY)
 	public List<Device> getDevices() {
 		return Devices;
 	}

@@ -27,13 +27,11 @@ public class Device {
 
 
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
 	private Long num_equipement;
 	private String model_equipement;
 	private String conso_equipment;
-	@ManyToOne(fetch= FetchType.LAZY)
- 	@JoinColumn(name="num_home")
+	
 	private Home home;
 
 	public Device() {
@@ -47,6 +45,8 @@ public class Device {
 		this.conso_equipment = conso_equipment;
 	
 	}
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getNum_equipement() {
 		return num_equipement;
 	}
@@ -76,7 +76,8 @@ public class Device {
 		this.conso_equipment = conso_equipment;
 	}
 
-
+	@ManyToOne(fetch= FetchType.LAZY)
+ 	@JoinColumn(name="num_home")
 	public Home getHome() {
 		return home;
 	}

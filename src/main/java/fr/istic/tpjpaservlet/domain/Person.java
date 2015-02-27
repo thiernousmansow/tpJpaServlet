@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table(name="Person")
 public class Person {
@@ -34,26 +36,18 @@ public class Person {
 	
 	private Date  date_naiss;
 	private String profil_facebook;
-	@OneToMany(mappedBy="person")
+	
+	@OneToMany(mappedBy="person",cascade = CascadeType.PERSIST,fetch=FetchType.LAZY)
 	private List<Home> homes= new ArrayList<Home>() ;
 	
 	/*Recursion*/
 	@ManyToOne
-	@JoinColumn(name="id_person",nullable=true, insertable=false, updatable=false)
-	private Person personne;
-	@OneToMany(mappedBy="personne")
+	@JoinColumn(name="Fkperson_amis",nullable=true, insertable=false, updatable=false)
+	private Person person_amis;
+	@OneToMany(mappedBy="person_amis")
 	private List<Person>friends= new ArrayList<Person>() ;
 	
-	
-	
-	/*
-	@ManyToMany
-	@JoinTable(name="Persons_friends",joinColumns=
-	@JoinColumn(name="id_person"),
-	inverseJoinColumns=@JoinColumn(name="id_friend"))
-	private List<Friend> friends= new ArrayList<Friend>() ;
 
-    */	
 	
 	
 
@@ -106,17 +100,19 @@ public class Person {
 	public void setProfil_facebook(String profil_facebook) {
 		this.profil_facebook = profil_facebook;
 	}
+	
+	
 	public List<Home> getHomes() {
 		return homes;
 	}
 	public void setHomes(List<Home> homes) {
 		this.homes = homes;
 	}
-	public Person getPersonne() {
-		return personne;
+	public Person getPerson_Amis() {
+		return person_amis;
 	}
-	public void setPersonne(Person personne) {
-		this.personne = personne;
+	public void setPerson_Amis(Person person_amis) {
+		this.person_amis= person_amis;
 	}
 	public List<Person> getFriends() {
 		return friends;
