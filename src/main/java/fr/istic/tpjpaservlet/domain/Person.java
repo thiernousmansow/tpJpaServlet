@@ -3,6 +3,13 @@ package fr.istic.tpjpaservlet.domain;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Connection;
+
+
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -16,13 +23,19 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 
 @Entity
 @Table(name="Person")
+@Path(value="/Person")
 public class Person {
 
 
@@ -34,17 +47,19 @@ public class Person {
 	private String mail;
 	private String gender;
 	
-	private Date  date_naiss;
+	
+	private java.sql.Date  date_naiss;
 	private String profil_facebook;
 	
 	@OneToMany(mappedBy="person",cascade = CascadeType.PERSIST,fetch=FetchType.LAZY)
 	private List<Home> homes= new ArrayList<Home>() ;
 	
 	/*Recursion*/
-	@ManyToOne
-	@JoinColumn(name="Fkperson_amis",nullable=true, insertable=false, updatable=false)
-	private Person person_amis;
-	@OneToMany(mappedBy="person_amis")
+	@ManyToMany
+	  @JoinTable(
+	      name="amis_personnel",
+	      joinColumns={@JoinColumn(name="id_person", referencedColumnName="id_person")},
+	      inverseJoinColumns={@JoinColumn(name="id_amis", referencedColumnName="id_person")})
 	private List<Person>friends= new ArrayList<Person>() ;
 	
 
@@ -108,18 +123,24 @@ public class Person {
 	public void setHomes(List<Home> homes) {
 		this.homes = homes;
 	}
-	public Person getPerson_Amis() {
-		return person_amis;
-	}
-	public void setPerson_Amis(Person person_amis) {
-		this.person_amis= person_amis;
-	}
+
 	public List<Person> getFriends() {
 		return friends;
 	}
 	public void setFriends(List<Person> friends) {
 		this.friends = friends;
 	}
-	
+
+	 public void addHome(Home home) {
+		    getHomes().add(home);
+		   home.setPerson(this);
+		  } 
+	 
+	  public void addAmis(Person amis) {
+	        getFriends().add(amis);
+	        if (!amis.getFriends().contains(this)) {
+	        	 getFriends().add(this);
+	        }
+	    }
 
 }

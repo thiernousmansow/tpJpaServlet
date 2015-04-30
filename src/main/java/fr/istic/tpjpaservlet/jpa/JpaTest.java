@@ -45,35 +45,40 @@ public class JpaTest {
      	//entity  
 		
 	    Person pers1 = test.createPersonTest(); 
-	    Person amis1    = new Person();
 	    Home maison1 = test.createHomeTest(); 
 	    Device etcdev1= test.createElectroniqueDeviceTest();
 	    Device heat1= test.createHeaterTest();
 	    
+	   
 	    Person pers2=new   Person("Durant Sylvie","DurantSylvie98@yahoo.fr","M", new Date(05/07/2001),"DurantSylvie");
-        Device heat2= new Heater(" 38AV76N","750w");
+	    Person pers3=new   Person("charles Bodin"," Bodin98@yahoo.fr","M", new Date(05/07/2001)," BodinCharles");
+	    Device heat2= new Heater(" 38AV76N","750w");
         Device etcdev2= new ElectronicDevice("AFL38600","650w");
         Home maison2=new Home(400, 5," 37 avenue du professseur charles foulon 37500","192.0.0.2");
 	    
-        pers1.setPerson_Amis(pers2);
-	    heat1.setHome(maison1);
+        
+        
+        
+        
+        pers1.addAmis(pers2);
+	    pers1.addAmis(pers3);
+        heat1.setHome(maison1);
 	    etcdev1.setHome(maison1);
 	    maison1.setPerson(pers1);
 	    maison1.getDevices().add(heat1);
 	    maison1.getDevices().add(etcdev1);
-	    pers1.getFriends().add(pers2);
 		pers1.getHomes().add(maison1);
 		
 		
 		
         
-		pers2.setPerson_Amis(pers1);
+		
+		pers2.addAmis(pers3);
         heat2.setHome(maison2);
         etcdev2.setHome(maison2);
         maison2.setPerson(pers2);
         maison2.getDevices().add(heat2);
         maison2.getDevices().add(etcdev2);
-        pers2.getFriends().add(pers1);
 		pers2.getHomes().add(maison2);
          
  	
@@ -82,17 +87,19 @@ public class JpaTest {
  
 
 	
-		
-		 manager.persist(pers1);
 		 manager.persist(pers2);
+		 manager.persist(pers3);
+		 manager.persist(pers1);
 		 manager.persist(maison1);
 		 manager.persist(maison2);
 		 manager.persist(heat2);
 		 manager.persist(etcdev2);
 		 
+		
+	   
 			tx.commit();
 
- 
+			System.out.println(".. effectuer");
     }
 	   private Person createPersonTest(){
 			Person pers1= new Person("Martin Paul","ouse898@yahoo.fr","M", new Date(2000/01/30),"MartinPaul");

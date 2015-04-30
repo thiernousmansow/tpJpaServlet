@@ -87,6 +87,9 @@ public class Device {
 		this.home = home;
 	}
 
+	public void addDevice(Device d) {
+		 d =new Device(model_equipement, conso_equipment);
+	}
 
 
 }

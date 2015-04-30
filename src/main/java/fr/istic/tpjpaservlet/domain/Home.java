@@ -14,6 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 @Entity
 @Table(name="Home")
 public class Home {
@@ -107,5 +111,11 @@ public class Home {
 	public void setDevices(List<Device> devices) {
 		Devices = devices;
 	}
-
+	
+    public void addDevice(Device device) {
+		   getDevices().add(device);
+		   device.setHome(this);
+		  }
+	
+	
 }

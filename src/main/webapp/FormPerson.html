@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <H3>Ajout d'une personne</H3>
+
+    <FORM method="POST" Action="/PersonServlet">
+        NOM: <INPUT type=text size=20 name=name> <BR>
+        MAIL: <INPUT type=text size=20 name=mail> <BR>
+        GENRE:    <select name="gender" class="form-control">
+                                <option value="Masculin">Masculin</option>
+                                <option value="Feminin">Feminin</option>
+                            </select> <BR>
+        DATE DE NAISSANCE:<BR><td>
+        	Annee : <INPUT type=text size=2 name=annee>
+        	Mois:<INPUT type=text size=2 name=mois>
+        	Jour:<INPUT type=text size=4 name=jour><BR>
+        Profil Facebook: <INPUT type=text size=20 name=profil_facebook> <BR>
+        <INPUT type=submit value=Send> <BR>
+    </FORM>
+</body>
+</html>
